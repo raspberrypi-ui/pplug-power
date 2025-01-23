@@ -1,0 +1,79 @@
+# English translations for wf-panel-pi package.
+# Copyright (C) 2024 Raspberry Pi Ltd
+# This file is distributed under the same license as the wf-panel-pi package.
+# Simon Long <simon@raspberrypi.org>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-23 11:25+0000\n"
+"PO-Revision-Date: 2017-03-06 14:18+0000\n"
+"Last-Translator:  <simon@raspberrypi.org>\n"
+"Language-Team: English (British)\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#
+#: ../src/power.cpp:39
+#, fuzzy
+msgid "System Monitor"
+msgstr "System Tray"
+
+#: ../src/power.c:92
+msgid ""
+"This power supply is not capable of supplying 5A\n"
+"Power to peripherals will be restricted"
+msgstr ""
+"This power supply is not capable of supplying 5V at 5A\n"
+"Power to peripherals will be restricted"
+
+#: ../src/power.c:108
+msgid ""
+"Reset due to low power event\n"
+"Please check your power supply"
+msgstr ""
+"Reset due to low power event\n"
+"Please check your power supply"
+
+#: ../src/power.c:169
+msgid ""
+"High display resolution is using large amounts of memory.\n"
+"Consider reducing screen resolution."
+msgstr ""
+
+#: ../src/power.c:224
+msgid ""
+"USB overcurrent\n"
+"Please check your connected USB devices"
+msgstr ""
+"USB overcurrent\n"
+"Please check your connected USB devices"
+
+#: ../src/power.c:275
+msgid ""
+"Low voltage warning\n"
+"Please check your power supply"
+msgstr ""
+"Low voltage warning\n"
+"Please check your power supply"
+
+#: ../src/power.c:294
+msgid "PSU low voltage detected\n"
+msgstr "PSU low voltage detected\n"
+
+#: ../src/power.c:295
+msgid "USB over current detected\n"
+msgstr "USB over current detected\n"
+
+#: ../src/power.c:296
+msgid "Low power reset has occurred\n"
+msgstr "Low power reset has occurred\n"
+
+#: ../src/power.c:351
+msgid "Power Information..."
+msgstr "Power Information..."
+

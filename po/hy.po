@@ -1,0 +1,76 @@
+# Armenian translations for PACKAGE package.
+# Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#  <simon@raspberrypi.org>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-23 11:25+0000\n"
+"PO-Revision-Date: 2017-03-06 14:18+0000\n"
+"Last-Translator:  <info@armath.am>\n"
+"Language-Team: Armenian\n"
+"Language: hy\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/power.cpp:39
+msgid "System Monitor"
+msgstr ""
+
+#: ../src/power.c:92
+msgid ""
+"This power supply is not capable of supplying 5A\n"
+"Power to peripherals will be restricted"
+msgstr ""
+
+#: ../src/power.c:108
+#, fuzzy
+msgid ""
+"Reset due to low power event\n"
+"Please check your power supply"
+msgstr ""
+"Ցածր լարման նախազգուշացում\n"
+"Խնդրում ենք ստուգել ձեր հոսանքի աղբյուրը"
+
+#: ../src/power.c:169
+msgid ""
+"High display resolution is using large amounts of memory.\n"
+"Consider reducing screen resolution."
+msgstr ""
+
+#: ../src/power.c:224
+msgid ""
+"USB overcurrent\n"
+"Please check your connected USB devices"
+msgstr ""
+
+#: ../src/power.c:275
+msgid ""
+"Low voltage warning\n"
+"Please check your power supply"
+msgstr ""
+"Ցածր լարման նախազգուշացում\n"
+"Խնդրում ենք ստուգել ձեր հոսանքի աղբյուրը"
+
+#: ../src/power.c:294
+msgid "PSU low voltage detected\n"
+msgstr ""
+
+#: ../src/power.c:295
+msgid "USB over current detected\n"
+msgstr ""
+
+#: ../src/power.c:296
+msgid "Low power reset has occurred\n"
+msgstr ""
+
+#: ../src/power.c:351
+#, fuzzy
+msgid "Power Information..."
+msgstr "Կապակցումը ձախողվեց - %s"
+
+#, fuzzy, c-format
