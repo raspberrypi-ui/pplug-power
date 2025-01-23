@@ -1,11 +1,12 @@
 gtkmm = dependency('gtkmm-3.0', version: '>=3.24')
+udev = dependency('libudev')
 
 sources = files(
   'power.cpp',
   'power.c'
 )
 
-deps = [ gtkmm ]
+deps = [ gtkmm, udev ]
 
 incdir = include_directories('/usr/include/wf-panel-pi')
 
