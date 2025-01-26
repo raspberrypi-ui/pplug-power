@@ -32,10 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <gtkmm/button.h>
 
 extern "C" {
+#include "lxutils.h"
 #include "power.h"
-extern void power_init (PowerPlugin *pt);
-extern void power_update_display (PowerPlugin *pt);
-extern void power_destructor (gpointer user_data);
 }
 
 class WayfirePower : public WayfireWidget

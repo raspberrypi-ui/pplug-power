@@ -44,5 +44,9 @@ typedef struct
     GThread *lv_thread;
 } PowerPlugin;
 
+extern void power_init (PowerPlugin *pt);
+extern void power_update_display (PowerPlugin *pt);
+extern void power_destructor (gpointer user_data);
+
 /* End of file */
 /*----------------------------------------------------------------------------*/
