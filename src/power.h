@@ -25,6 +25,10 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ============================================================================*/
 
+/*----------------------------------------------------------------------------*/
+/* Typedefs and macros */
+/*----------------------------------------------------------------------------*/
+
 typedef struct
 {
     int icon_size;                  /* Variables used under wf-panel */
@@ -43,6 +47,10 @@ typedef struct
     GThread *oc_thread;
     GThread *lv_thread;
 } PowerPlugin;
+
+/*----------------------------------------------------------------------------*/
+/* Prototypes                                                                 */
+/*----------------------------------------------------------------------------*/
 
 extern void power_init (PowerPlugin *pt);
 extern void power_update_display (PowerPlugin *pt);

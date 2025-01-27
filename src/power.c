@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define ICON_BROWNOUT       0x04
 
 /*----------------------------------------------------------------------------*/
-/* Plug-in global data                                                        */
+/* Global data                                                                */
 /*----------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------*/
@@ -53,13 +53,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*----------------------------------------------------------------------------*/
 
 static gboolean is_pi (void);
-static void update_icon (PowerPlugin *pt);
 static void check_psu (void);
 static void check_brownout (PowerPlugin *pt);
+static char *get_string (char *cmd);
+static void check_memres (void);
 static gpointer overcurrent_thread (gpointer data);
 static gboolean cb_overcurrent (gpointer data);
 static gpointer lowvoltage_thread (gpointer data);
 static gboolean cb_lowvoltage (gpointer data);
+static void update_icon (PowerPlugin *pt);
+static void show_info (GtkWidget *, gpointer);
+static void power_button_clicked (GtkWidget *, PowerPlugin *pt);
 
 /*----------------------------------------------------------------------------*/
 /* Function definitions                                                       */
