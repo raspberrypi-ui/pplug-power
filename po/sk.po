@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 11:25+0000\n"
-"PO-Revision-Date: 2020-11-28 22:06+0100\n"
+"POT-Creation-Date: 2025-02-03 11:10+0000\n"
+"PO-Revision-Date: 2025-01-31 22:27+0100\n"
 "Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak\n"
 "Language: sk\n"
@@ -16,20 +16,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.5\n"
 
-#: ../src/power.cpp:39
+#: ../src/power.cpp:40
 #, fuzzy
 msgid "System Monitor"
 msgstr "Priorita _systému"
 
-#: ../src/power.c:92
+#: ../src/power.c:96
 msgid ""
 "This power supply is not capable of supplying 5A\n"
 "Power to peripherals will be restricted"
 msgstr ""
 
-#: ../src/power.c:108
+#: ../src/power.c:112
 #, fuzzy
 msgid ""
 "Reset due to low power event\n"
@@ -38,19 +38,19 @@ msgstr ""
 "Upozornenie na nízke napätie\n"
 "Skontrolujte, prosím, zdroj napätia"
 
-#: ../src/power.c:169
+#: ../src/power.c:173
 msgid ""
 "High display resolution is using large amounts of memory.\n"
 "Consider reducing screen resolution."
 msgstr ""
 
-#: ../src/power.c:224
+#: ../src/power.c:228
 msgid ""
 "USB overcurrent\n"
 "Please check your connected USB devices"
 msgstr ""
 
-#: ../src/power.c:275
+#: ../src/power.c:279
 msgid ""
 "Low voltage warning\n"
 "Please check your power supply"
@@ -58,21 +58,21 @@ msgstr ""
 "Upozornenie na nízke napätie\n"
 "Skontrolujte, prosím, zdroj napätia"
 
-#: ../src/power.c:294
+#: ../src/power.c:298
 msgid "PSU low voltage detected\n"
 msgstr ""
 
-#: ../src/power.c:295
+#: ../src/power.c:299
 msgid "USB over current detected\n"
 msgstr ""
 
-#: ../src/power.c:296
+#: ../src/power.c:300
 msgid "Low power reset has occurred\n"
 msgstr ""
 
-#: ../src/power.c:351
+#: ../src/power.c:352
 #, fuzzy
 msgid "Power Information..."
 msgstr "Informácie o pripojení"
 
-#, fuzzy, c-format
+#, c-format
