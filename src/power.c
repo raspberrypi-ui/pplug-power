@@ -341,9 +341,6 @@ void power_init (PowerPlugin *pt)
     gtk_button_set_relief (GTK_BUTTON (pt->plugin), GTK_RELIEF_NONE);
     g_signal_connect (pt->plugin, "clicked", G_CALLBACK (power_button_clicked), pt);
 
-    /* Set up long press */
-    pt->gesture = add_long_press (pt->plugin, NULL, NULL);
-
     pt->show_icon = 0;
     pt->oc_thread = NULL;
     pt->lv_thread = NULL;
@@ -399,7 +396,6 @@ void power_destructor (gpointer user_data)
     if (pt->udev_mon_lv) udev_monitor_unref (pt->udev_mon_lv);
     pt->udev_mon_lv = NULL;
     if (pt->udev) udev_unref (pt->udev);
-    if (pt->gesture) g_object_unref (pt->gesture);
     g_free (pt);
 }
 
