@@ -1,3 +1,9 @@
+wfplug-power (0.2) bookworm; urgency=medium
+
+  * Use parent is_pi function; optimise startup
+
+ -- Simon Long <simon@raspberrypi.com>  Wed, 26 Mar 2025 13:58:40 +0000
+
 wfplug-power (0.1) bookworm; urgency=medium
 
   * Initial release.
