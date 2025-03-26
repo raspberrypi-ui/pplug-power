@@ -52,11 +52,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Prototypes                                                                 */
 /*----------------------------------------------------------------------------*/
 
-static gboolean is_pi (void);
 static void check_psu (void);
 static void check_brownout (PowerPlugin *pt);
 static char *get_string (char *cmd);
 static void check_memres (void);
+static gboolean startup_checks (gpointer data);
 static gpointer overcurrent_thread (gpointer data);
 static gboolean cb_overcurrent (gpointer data);
 static gpointer lowvoltage_thread (gpointer data);
@@ -68,16 +68,6 @@ static void power_button_clicked (GtkWidget *, PowerPlugin *pt);
 /*----------------------------------------------------------------------------*/
 /* Function definitions                                                       */
 /*----------------------------------------------------------------------------*/
-
-/* Helpers */
-
-static gboolean is_pi (void)
-{
-    if (system ("raspi-config nonint is_pi") == 0)
-        return TRUE;
-    else
-        return FALSE;
-}
 
 /* Tests */
 
@@ -171,6 +161,16 @@ static void check_memres (void)
 
     if (max_h > RES_HEIGHT_THRESHOLD)
         wfpanel_notify (_("High display resolution is using large amounts of memory.\nConsider reducing screen resolution."));
+}
+
+static gboolean startup_checks (gpointer data)
+{
+    PowerPlugin *pt = (PowerPlugin *) data;
+
+    check_psu ();
+    check_brownout (pt);
+    check_memres ();
+    return FALSE;
 }
 
 /* Monitoring threads and callbacks */
@@ -374,9 +374,7 @@ void power_init (PowerPlugin *pt)
         pt->oc_thread = g_thread_new (NULL, overcurrent_thread, pt);
         pt->lv_thread = g_thread_new (NULL, lowvoltage_thread, pt);
 
-        check_psu ();
-        check_brownout (pt);
-        check_memres ();
+        g_idle_add (startup_checks, pt);
     }
 
     update_icon (pt);
