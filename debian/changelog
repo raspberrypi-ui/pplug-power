@@ -1,3 +1,9 @@
+wfplug-power (0.3) bookworm; urgency=medium
+
+  * Set initial state of icon correctly
+
+ -- Simon Long <simon@raspberrypi.com>  Mon, 07 Apr 2025 14:09:20 +0100
+
 wfplug-power (0.2) bookworm; urgency=medium
 
   * Use parent is_pi function; optimise startup

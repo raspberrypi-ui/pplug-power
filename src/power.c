@@ -1,5 +1,5 @@
 /*============================================================================
-Copyright (c) 2023-2025 Raspberry Pi Holdings Ltd.
+Copyright (c) 2023-2025 Raspberry Pi
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -294,7 +294,7 @@ static void update_icon (PowerPlugin *pt)
     if (!pt->show_icon) gtk_widget_hide (pt->plugin);
     else
     {
-        gtk_widget_show (pt->plugin);
+        gtk_widget_show_all (pt->plugin);
         tooltip = g_strconcat (pt->show_icon & ICON_LOW_VOLTAGE ? _("PSU low voltage detected\n") : "",
             pt->show_icon & ICON_OVER_CURRENT ? _("USB over current detected\n") : "",
             pt->show_icon & ICON_BROWNOUT ? _("Low power reset has occurred\n") : "", NULL);
@@ -376,11 +376,6 @@ void power_init (PowerPlugin *pt)
 
         g_idle_add (startup_checks, pt);
     }
-
-    update_icon (pt);
-
-    /* Show the widget and return */
-    gtk_widget_show_all (pt->plugin);
 }
 
 void power_destructor (gpointer user_data)
