@@ -1,3 +1,9 @@
+pplug-power (0.4) bookworm; urgency=medium
+
+  * Add lxpanel plugin
+
+ -- Simon Long <simon@raspberrypi.com>  Thu, 22 May 2025 17:48:20 +0100
+
 wfplug-power (0.3) bookworm; urgency=medium
 
   * Set initial state of icon correctly

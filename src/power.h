@@ -26,14 +26,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ============================================================================*/
 
 /*----------------------------------------------------------------------------*/
-/* Typedefs and macros */
+/* Typedefs and macros                                                        */
 /*----------------------------------------------------------------------------*/
+
+#define PLUGIN_TITLE "System Monitor"
 
 typedef struct
 {
-    int icon_size;                  /* Variables used under wf-panel */
-    gboolean bottom;
-    GtkWidget *plugin;              /* Back pointer to the widget */
+    GtkWidget *plugin;
+
+#ifdef LXPLUG
+    LXPanel *panel;                 /* Back pointer to panel */
+    config_setting_t *settings;     /* Plugin settings */
+#endif
+
     GtkWidget *tray_icon;           /* Displayed image */
     GtkWidget *menu;
     int show_icon;
@@ -46,6 +52,8 @@ typedef struct
     GThread *oc_thread;
     GThread *lv_thread;
 } PowerPlugin;
+
+extern conf_table_t conf_table[1];
 
 /*----------------------------------------------------------------------------*/
 /* Prototypes                                                                 */

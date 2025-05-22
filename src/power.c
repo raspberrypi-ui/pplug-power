@@ -29,7 +29,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <glib/gi18n.h>
 #include <libudev.h>
 
+#ifdef LXPLUG
+#include "plugin.h"
+#else
 #include "lxutils.h"
+#endif
 
 #include "power.h"
 
@@ -48,14 +52,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Global data                                                                */
 /*----------------------------------------------------------------------------*/
 
+conf_table_t conf_table[1] = {
+    {CONF_TYPE_NONE, NULL, NULL, NULL}
+};
+
 /*----------------------------------------------------------------------------*/
 /* Prototypes                                                                 */
 /*----------------------------------------------------------------------------*/
 
-static void check_psu (void);
+static void check_psu (PowerPlugin *pt);
 static void check_brownout (PowerPlugin *pt);
 static char *get_string (char *cmd);
-static void check_memres (void);
+static void check_memres (PowerPlugin *pt);
 static gboolean startup_checks (gpointer data);
 static gpointer overcurrent_thread (gpointer data);
 static gboolean cb_overcurrent (gpointer data);
@@ -71,7 +79,7 @@ static void power_button_clicked (GtkWidget *, PowerPlugin *pt);
 
 /* Tests */
 
-static void check_psu (void)
+static void check_psu (PowerPlugin *pt)
 {
     if (system ("raspi-config nonint is_cmfive") == 0) return;
 
@@ -83,7 +91,7 @@ static void check_psu (void)
         unsigned char *cptr = (unsigned char *) &val;
         // you're kidding, right?
         for (int i = 3; i >= 0; i--) cptr[i] = fgetc (fp);
-        if (val < 5000) wfpanel_notify (_("This power supply is not capable of supplying 5A\nPower to peripherals will be restricted"));
+        if (val < 5000) wrap_notify (pt->panel, _("This power supply is not capable of supplying 5A\nPower to peripherals will be restricted"));
         fclose (fp);
     }
 }
@@ -132,7 +140,7 @@ static char *get_string (char *cmd)
 #define MEM_WARN_THRESHOLD 2048
 #define RES_HEIGHT_THRESHOLD 1200
 
-static void check_memres (void)
+static void check_memres (PowerPlugin *pt)
 {
     char *res;
     int mem, width, height, max_h = 0;
@@ -160,16 +168,16 @@ static void check_memres (void)
     }
 
     if (max_h > RES_HEIGHT_THRESHOLD)
-        wfpanel_notify (_("High display resolution is using large amounts of memory.\nConsider reducing screen resolution."));
+        wrap_notify (pt->panel, _("High display resolution is using large amounts of memory.\nConsider reducing screen resolution."));
 }
 
 static gboolean startup_checks (gpointer data)
 {
     PowerPlugin *pt = (PowerPlugin *) data;
 
-    check_psu ();
+    check_psu (pt);
     check_brownout (pt);
-    check_memres ();
+    check_memres (pt);
     return FALSE;
 }
 
@@ -225,7 +233,7 @@ static gboolean cb_overcurrent (gpointer data)
 {
     PowerPlugin *pt = (PowerPlugin *) data;
 
-    wfpanel_critical (_("USB overcurrent\nPlease check your connected USB devices"));
+    wrap_critical (pt->panel, _("USB overcurrent\nPlease check your connected USB devices"));
     pt->show_icon |= ICON_OVER_CURRENT;
     update_icon (pt);
     return FALSE;
@@ -276,7 +284,7 @@ static gboolean cb_lowvoltage (gpointer data)
 {
     PowerPlugin *pt = (PowerPlugin *) data;
 
-    wfpanel_critical (_("Low voltage warning\nPlease check your power supply"));
+    wrap_critical (pt->panel, _("Low voltage warning\nPlease check your power supply"));
     pt->show_icon |= ICON_LOW_VOLTAGE;
     update_icon (pt);
     return FALSE;
@@ -288,7 +296,7 @@ static void update_icon (PowerPlugin *pt)
 {
     char *tooltip;
 
-    set_taskbar_icon (pt->tray_icon, "under-volt", pt->icon_size);
+    wrap_set_taskbar_icon (pt, pt->tray_icon, "under-volt");
     gtk_widget_set_sensitive (pt->plugin, pt->show_icon);
 
     if (!pt->show_icon) gtk_widget_hide (pt->plugin);
@@ -318,7 +326,7 @@ static void power_button_clicked (GtkWidget *, PowerPlugin *pt)
 {
     CHECK_LONGPRESS
     gtk_widget_show_all (pt->menu);
-    show_menu_with_kbd (pt->plugin, pt->menu);
+    wrap_show_menu (pt->plugin, pt->menu);
 }
 
 /* Handler for system config changed message from panel */
@@ -339,8 +347,11 @@ void power_init (PowerPlugin *pt)
 
     /* Set up button */
     gtk_button_set_relief (GTK_BUTTON (pt->plugin), GTK_RELIEF_NONE);
+#ifndef LXPLUG
     g_signal_connect (pt->plugin, "clicked", G_CALLBACK (power_button_clicked), pt);
+#endif
 
+    /* Set up variables */
     pt->show_icon = 0;
     pt->oc_thread = NULL;
     pt->lv_thread = NULL;
@@ -376,6 +387,9 @@ void power_init (PowerPlugin *pt)
 
         g_idle_add (startup_checks, pt);
     }
+    /* !!!!Uncomment to test!!!! */
+    //cb_overcurrent (pt);
+    //cb_lowvoltage (pt);
 }
 
 void power_destructor (gpointer user_data)
@@ -391,6 +405,60 @@ void power_destructor (gpointer user_data)
     if (pt->udev) udev_unref (pt->udev);
     g_free (pt);
 }
+
+/*----------------------------------------------------------------------------*/
+/* LXPanel plugin functions                                                   */
+/*----------------------------------------------------------------------------*/
+#ifdef LXPLUG
+
+/* Constructor */
+static GtkWidget *power_constructor (LXPanel *panel, config_setting_t *settings)
+{
+    /* Allocate and initialize plugin context */
+    PowerPlugin *pt = g_new0 (PowerPlugin, 1);
+
+    /* Allocate top level widget and set into plugin widget pointer. */
+    pt->panel = panel;
+    pt->settings = settings;
+    pt->plugin = gtk_button_new ();
+    lxpanel_plugin_set_data (pt->plugin, pt, power_destructor);
+
+    power_init (pt);
+
+    return pt->plugin;
+}
+
+/* Handler for button press */
+static gboolean power_button_press_event (GtkWidget *widget, GdkEventButton *event, LXPanel *)
+{
+    PowerPlugin *pt = lxpanel_plugin_get_data (widget);
+    if (event->button == 1)
+    {
+        power_button_clicked (widget, pt);
+        return TRUE;
+    }
+    else return FALSE;
+}
+
+/* Handler for system config changed message from panel */
+static void power_configuration_changed (LXPanel *, GtkWidget *plugin)
+{
+    PowerPlugin *pt = lxpanel_plugin_get_data (plugin);
+    power_update_display (pt);
+}
+
+FM_DEFINE_MODULE (lxpanel_gtk, power)
+
+/* Plugin descriptor */
+LXPanelPluginInit fm_module_init_lxpanel_gtk = {
+    .name = N_(PLUGIN_TITLE),
+    .description = N_("Monitors system power"),
+    .new_instance = power_constructor,
+    .reconfigure = power_configuration_changed,
+    .button_press_event = power_button_press_event,
+    .gettext_package = GETTEXT_PACKAGE
+};
+#endif
 
 /* End of file */
 /*----------------------------------------------------------------------------*/

@@ -1,0 +1,2 @@
+usr/lib/${DEB_HOST_MULTIARCH}/lxpanel-pi/power.so
+usr/share/locale/*/LC_MESSAGES/lxplug_power.mo
