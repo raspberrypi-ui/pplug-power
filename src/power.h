@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /* Typedefs and macros                                                        */
 /*----------------------------------------------------------------------------*/
 
-#define PLUGIN_TITLE "System Monitor"
+#define PLUGIN_TITLE N_("System Monitor")
 
 typedef struct
 {

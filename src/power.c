@@ -107,7 +107,7 @@ static void check_brownout (PowerPlugin *pt)
         for (int i = 3; i >= 0; i--) cptr[i] = fgetc (fp);
         if (val & 0x02)
         {
-            wfpanel_critical (_("Reset due to low power event\nPlease check your power supply"));
+            wrap_critical (pt->panel, _("Reset due to low power event\nPlease check your power supply"));
             pt->show_icon |= ICON_BROWNOUT;
             update_icon (pt);
         }
@@ -447,11 +447,12 @@ static void power_configuration_changed (LXPanel *, GtkWidget *plugin)
     power_update_display (pt);
 }
 
-FM_DEFINE_MODULE (lxpanel_gtk, power)
+int module_lxpanel_gtk_version = __FM_DEFINE_VERSION__(lxpanel_gtk);
+char module_name[] = PLUGIN_NAME;
 
 /* Plugin descriptor */
 LXPanelPluginInit fm_module_init_lxpanel_gtk = {
-    .name = N_(PLUGIN_TITLE),
+    .name = PLUGIN_TITLE,
     .description = N_("Monitors system power"),
     .new_instance = power_constructor,
     .reconfigure = power_configuration_changed,

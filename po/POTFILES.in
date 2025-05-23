@@ -1,2 +1,5 @@
-src/power.cpp
+[encoding: UTF-8]
 src/power.c
+src/power.cpp
+src/power.h
+src/power.hpp
