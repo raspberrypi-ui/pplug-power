@@ -5,7 +5,7 @@ Maintainer: Simon Long <simon@raspberrypi.com>
 Build-Depends:
  debhelper-compat (= 13), meson,
  libgtk-3-dev (>= 3.24), libgtkmm-3.0-dev (>= 3.24),
- lxpanel-dev (>= 0.10.1-2+rpt21), wf-panel-pi-dev (>=0.92),
+ lxpanel-pi-dev, wf-panel-pi-dev (>=0.92),
  libgtk-layer-shell-dev (>= 0.6.0), libglm-dev, libudev-dev
 Standards-Version: 4.5.1
 Homepage: http://raspberrypi.com/
@@ -13,12 +13,13 @@ Homepage: http://raspberrypi.com/
 Package: lxplug-power
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- lxpanel (>= 0.10.1-2+rpt21), lxpanel-data (>= 0.10.1-2+rpt21)
+ lxpanel-pi
 Description: Power plugin for lxpanel
  Plugin for lxpanel to monitor power and system events.
 
 Package: wfplug-power
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, wf-panel-pi (>=0.96)
+Depends: ${shlibs:Depends}, ${misc:Depends},
+ wf-panel-pi (>=0.96)
 Description: Power plugin for wf-panel-pi
  Plugin for wf-panel-pi to monitor power and system events.
