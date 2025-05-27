@@ -1,4 +1,4 @@
-pplug-power (0.4) bookworm; urgency=medium
+pplug-power (0.4) trixie; urgency=medium
 
   * Add lxpanel plugin
 
