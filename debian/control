@@ -13,13 +13,19 @@ Homepage: http://raspberrypi.com/
 Package: lxplug-power
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- lxpanel-pi
+ lxpanel-pi, pplug-power-data
 Description: Power plugin for lxpanel
  Plugin for lxpanel to monitor power and system events.
 
 Package: wfplug-power
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- wf-panel-pi (>=0.96)
+ wf-panel-pi (>=0.96), pplug-power-data
 Description: Power plugin for wf-panel-pi
  Plugin for wf-panel-pi to monitor power and system events.
+
+Package: pplug-power-data
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+Description: Power plugin - data
+ Data for power plugin
