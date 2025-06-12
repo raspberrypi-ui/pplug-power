@@ -42,6 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*----------------------------------------------------------------------------*/
 
 #define POWER_PATH "/proc/device-tree/chosen/power/"
+#define WARN_FILE  "/proc/device-tree/chosen/user-warnings"
 
 /* Reasons to show the icon */
 #define ICON_LOW_VOLTAGE    0x01
@@ -62,6 +63,7 @@ conf_table_t conf_table[1] = {
 
 static void check_psu (PowerPlugin *pt);
 static void check_brownout (PowerPlugin *pt);
+static void check_user_warnings (PowerPlugin *pt);
 static char *get_string (char *cmd);
 static void check_memres (PowerPlugin *pt);
 static gboolean startup_checks (gpointer data);
@@ -112,6 +114,23 @@ static void check_brownout (PowerPlugin *pt)
             update_icon (pt);
         }
         fclose (fp);
+    }
+}
+
+static void check_user_warnings (PowerPlugin *pt)
+{
+    if (!access (WARN_FILE, F_OK))
+    {
+        FILE *fp = fopen (WARN_FILE, "rb");
+        if (fp)
+        {
+            char *buf = NULL;
+            size_t siz = 0;
+            while (getline (&buf, &siz, fp) != -1)
+                wrap_notify (pt->panel, g_strstrip (buf));
+            free (buf);
+            fclose (fp);
+        }
     }
 }
 
@@ -178,6 +197,7 @@ static gboolean startup_checks (gpointer data)
     check_psu (pt);
     check_brownout (pt);
     check_memres (pt);
+    check_user_warnings (pt);
     return FALSE;
 }
 
