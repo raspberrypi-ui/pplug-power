@@ -467,7 +467,7 @@ static void power_configuration_changed (LXPanel *, GtkWidget *plugin)
     power_update_display (pt);
 }
 
-int module_lxpanel_gtk_version = __FM_DEFINE_VERSION__(lxpanel_gtk);
+int module_lxpanel_gtk_version = 1;
 char module_name[] = PLUGIN_NAME;
 
 /* Plugin descriptor */
