@@ -10,12 +10,12 @@ Build-Depends:
 Standards-Version: 4.5.1
 Homepage: http://raspberrypi.com/
 
-Package: lxplug-power
+Package: lpplug-power
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
  lxpanel-pi, pplug-power-data
-Description: Power plugin for lxpanel
- Plugin for lxpanel to monitor power and system events.
+Description: Power plugin for lxpanel-pi
+ Plugin for lxpanel-pi to monitor power and system events.
 
 Package: wfplug-power
 Architecture: any
