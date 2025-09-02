@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the wf-panel-pi package.
 # ideal <05281253@bjtu.edu.cn>, 2008.
 # Yinghua Wang <wantinghard@gmail.com>, 2016.
-# ykla <yklaxds@gmail>, 2024.
+# ykla <yklaxds@gmail>, 2024,2025.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: lxpanel 0.3.8.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-23 11:25+0000\n"
-"PO-Revision-Date: 2024-07-14 17:34+0800\n"
+"PO-Revision-Date: 2025-08-23 14:58+0800\n"
 "Last-Translator: ykla <yklaxds@gmail.com>\n"
 "Language-Team: ykla <yklaxds@gmail.com>\n"
 "Language: zh_CN\n"
@@ -17,29 +18,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.7\n"
 "X-Pootle-Revision: 0\n"
 "X-Pootle-Path: /zh_CN/lxpanel/po/zh_CN.po\n"
 "X-POOTLE-MTIME: 1417570650.000000\n"
 
 #: ../src/power.cpp:39
-#, fuzzy
 msgid "System Monitor"
-msgstr "系统优先级(_S)"
+msgstr "系统监视器"
 
 #: ../src/power.c:92
 msgid ""
 "This power supply is not capable of supplying 5A\n"
 "Power to peripherals will be restricted"
 msgstr ""
+"此电源适配器无法提供 5A 电流\n"
+"外设供电将受到限制"
 
 #: ../src/power.c:108
-#, fuzzy
 msgid ""
 "Reset due to low power event\n"
 "Please check your power supply"
 msgstr ""
-"低电压警告\n"
+"因低电压事件而重启\n"
 "请检查您的电源适配器"
 
 #: ../src/power.c:169
@@ -47,12 +48,16 @@ msgid ""
 "High display resolution is using large amounts of memory.\n"
 "Consider reducing screen resolution."
 msgstr ""
+"高分辨率会占用大量内存。\n"
+"建议考虑降低屏幕分辨率。"
 
 #: ../src/power.c:224
 msgid ""
 "USB overcurrent\n"
 "Please check your connected USB devices"
 msgstr ""
+"USB 过流\n"
+"请检查已连接的 USB 设备"
 
 #: ../src/power.c:275
 msgid ""
@@ -64,19 +69,16 @@ msgstr ""
 
 #: ../src/power.c:294
 msgid "PSU low voltage detected\n"
-msgstr ""
+msgstr "检测到电源电压过低\n"
 
 #: ../src/power.c:295
 msgid "USB over current detected\n"
-msgstr ""
+msgstr "检测到 USB 过流\n"
 
 #: ../src/power.c:296
 msgid "Low power reset has occurred\n"
-msgstr ""
+msgstr "系统因低电压事件已重启\n"
 
 #: ../src/power.c:351
-#, fuzzy
 msgid "Power Information..."
-msgstr "连接信息"
-
-#, c-format
+msgstr "电源信息……"
