@@ -47,10 +47,9 @@ typedef struct
     struct udev *udev;
     struct udev_monitor *udev_mon_oc;
     struct udev_monitor *udev_mon_lv;
-    int fd_oc;
-    int fd_lv;
-    GThread *oc_thread;
-    GThread *lv_thread;
+    guint source_tag_oc;
+    guint source_tag_lv;
+    guint source_tag_startup;
 } PowerPlugin;
 
 extern conf_table_t conf_table[1];
