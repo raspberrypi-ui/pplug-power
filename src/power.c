@@ -68,10 +68,8 @@ static void check_user_warnings (PowerPlugin *pt);
 static char *get_string (char *cmd);
 static void check_memres (PowerPlugin *pt);
 static gboolean startup_checks (gpointer data);
-static gboolean cb_overcurrent_fd_readable (gint fd, GIOCondition condition, gpointer data);
-static void report_overcurrent (PowerPlugin *pt);
-static gboolean cb_lowvoltage_fd_readable (gint fd, GIOCondition condition, gpointer data);
-static void report_lowvoltage (PowerPlugin *pt);
+static gboolean cb_overcurrent_fd (gint, GIOCondition, gpointer data);
+static gboolean cb_lowvoltage_fd (gint, GIOCondition, gpointer data);
 static void update_icon (PowerPlugin *pt);
 static void show_info (GtkWidget *, gpointer);
 static void power_button_clicked (GtkWidget *, PowerPlugin *pt);
@@ -202,11 +200,11 @@ static gboolean startup_checks (gpointer data)
     check_memres (pt);
     check_user_warnings (pt);
 
-    pt->source_tag_startup = 0;
+    pt->startup_id = 0;
     return G_SOURCE_REMOVE;
 }
 
-static gboolean cb_overcurrent_fd_readable (gint fd __attribute__((unused)), GIOCondition condition __attribute__((unused)), gpointer data)
+static gboolean cb_overcurrent_fd (gint, GIOCondition, gpointer data)
 {
     PowerPlugin *pt = (PowerPlugin *) data;
     int val;
@@ -227,7 +225,9 @@ static gboolean cb_overcurrent_fd_readable (gint fd __attribute__((unused)), GIO
                 {
                     if (sscanf (udev_device_get_property_value (dev, "OVER_CURRENT_COUNT"), "%d", &val) == 1 && val != pt->last_oc)
                     {
-                        report_overcurrent (pt);
+                        wrap_critical (pt->panel, _("USB overcurrent\nPlease check your connected USB devices"));
+                        pt->show_icon |= ICON_OVER_CURRENT;
+                        update_icon (pt);
                         pt->last_oc = val;
                     }
                 }
@@ -241,14 +241,7 @@ static gboolean cb_overcurrent_fd_readable (gint fd __attribute__((unused)), GIO
     return G_SOURCE_CONTINUE;
 }
 
-static void report_overcurrent (PowerPlugin *pt)
-{
-    wrap_critical (pt->panel, _("USB overcurrent\nPlease check your connected USB devices"));
-    pt->show_icon |= ICON_OVER_CURRENT;
-    update_icon (pt);
-}
-
-static gboolean cb_lowvoltage_fd_readable (gint fd __attribute__((unused)), GIOCondition condition __attribute__((unused)), gpointer data)
+static gboolean cb_lowvoltage_fd (gint, GIOCondition, gpointer data)
 {
     PowerPlugin *pt = (PowerPlugin *) data;
     struct udev_device *dev;
@@ -266,7 +259,9 @@ static gboolean cb_lowvoltage_fd_readable (gint fd __attribute__((unused)), GIOC
             {
                 if (fgetc (fp) == 0x31)
                 {
-                    report_lowvoltage (pt);
+                    wrap_critical (pt->panel, _("Low voltage warning\nPlease check your power supply"));
+                    pt->show_icon |= ICON_LOW_VOLTAGE;
+                    update_icon (pt);
                 }
                 fclose (fp);
             }
@@ -276,13 +271,6 @@ static gboolean cb_lowvoltage_fd_readable (gint fd __attribute__((unused)), GIOC
     }
 
     return G_SOURCE_CONTINUE;
-}
-
-static void report_lowvoltage (PowerPlugin *pt)
-{
-    wrap_critical (pt->panel, _("Low voltage warning\nPlease check your power supply"));
-    pt->show_icon |= ICON_LOW_VOLTAGE;
-    update_icon (pt);
 }
 
 /* Update the icon to show current status */
@@ -351,9 +339,9 @@ void power_init (PowerPlugin *pt)
     pt->udev_mon_oc = NULL;
     pt->udev_mon_lv = NULL;
     pt->udev = NULL;
-    pt->source_tag_oc = 0;
-    pt->source_tag_lv = 0;
-    pt->source_tag_startup = 0;
+    pt->overcurrent_id = 0;
+    pt->lowvoltage_id = 0;
+    pt->startup_id = 0;
 
     pt->menu = gtk_menu_new ();
     GtkWidget *item = gtk_menu_item_new_with_label (_("Power Information..."));
@@ -372,7 +360,7 @@ void power_init (PowerPlugin *pt)
         {
             udev_monitor_filter_add_match_subsystem_devtype (pt->udev_mon_oc, "usb", NULL);
             udev_monitor_enable_receiving (pt->udev_mon_oc);
-            pt->source_tag_oc = g_unix_fd_add (udev_monitor_get_fd (pt->udev_mon_oc), G_IO_IN, cb_overcurrent_fd_readable, pt);
+            pt->overcurrent_id = g_unix_fd_add (udev_monitor_get_fd (pt->udev_mon_oc), G_IO_IN, cb_overcurrent_fd, pt);
         }
 
         pt->udev_mon_lv = udev_monitor_new_from_netlink (pt->udev, "kernel");
@@ -380,26 +368,23 @@ void power_init (PowerPlugin *pt)
         {
             udev_monitor_filter_add_match_subsystem_devtype (pt->udev_mon_lv, "hwmon", NULL);
             udev_monitor_enable_receiving (pt->udev_mon_lv);
-            pt->source_tag_lv = g_unix_fd_add (udev_monitor_get_fd (pt->udev_mon_lv), G_IO_IN, cb_lowvoltage_fd_readable, pt);
+            pt->lowvoltage_id = g_unix_fd_add (udev_monitor_get_fd (pt->udev_mon_lv), G_IO_IN, cb_lowvoltage_fd, pt);
         }
 
-        pt->source_tag_startup = g_idle_add (startup_checks, pt);
+        pt->startup_id = g_idle_add (startup_checks, pt);
     }
-    /* !!!!Uncomment to test!!!! */
-    // report_overcurrent (pt);
-    // report_lowvoltage (pt);
 }
 
 void power_destructor (gpointer user_data)
 {
     PowerPlugin *pt = (PowerPlugin *) user_data;
 
-    if (pt->source_tag_oc > 0) g_source_remove (pt->source_tag_oc);
-    pt->source_tag_oc = 0;
-    if (pt->source_tag_lv > 0) g_source_remove (pt->source_tag_lv);
-    pt->source_tag_lv = 0;
-    if (pt->source_tag_startup > 0) g_source_remove (pt->source_tag_startup);
-    pt->source_tag_startup = 0;
+    if (pt->overcurrent_id > 0) g_source_remove (pt->overcurrent_id);
+    pt->overcurrent_id = 0;
+    if (pt->lowvoltage_id > 0) g_source_remove (pt->lowvoltage_id);
+    pt->lowvoltage_id = 0;
+    if (pt->startup_id > 0) g_source_remove (pt->startup_id);
+    pt->startup_id = 0;
 
     if (pt->udev_mon_oc) udev_monitor_unref (pt->udev_mon_oc);
     pt->udev_mon_oc = NULL;

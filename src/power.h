@@ -47,9 +47,9 @@ typedef struct
     struct udev *udev;
     struct udev_monitor *udev_mon_oc;
     struct udev_monitor *udev_mon_lv;
-    guint source_tag_oc;
-    guint source_tag_lv;
-    guint source_tag_startup;
+    guint overcurrent_id;
+    guint lowvoltage_id;
+    guint startup_id;
 } PowerPlugin;
 
 extern conf_table_t conf_table[1];
