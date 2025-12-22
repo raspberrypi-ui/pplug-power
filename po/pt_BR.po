@@ -1,0 +1,83 @@
+Brazilian Portuguese translations for plugin package.
+# Copyright (C) 2025 Raspberry Pi
+# This file is distributed under the same license as the pplug-power package.
+# Eduardo Addad de Oliveira <eduardo@addadtech.com.br>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-23 10:36+0100\n"
+"PO-Revision-Date: 2025-12-21 23:17-0300\n"
+"Last-Translator: Eduardo Addad de Oliveira <eduardo@addadtech.com.br>\n"
+"Language-Team: Portuguese (Brazilian)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.7\n"
+
+#: ../src/power.c:94
+msgid ""
+"This power supply is not capable of supplying 5A\n"
+"Power to peripherals will be restricted"
+msgstr ""
+"Esta fonte de alimentação não é capaz de fornecer 5A.\n"
+"A alimentação dos periféricos será restrita"
+
+#: ../src/power.c:110
+msgid ""
+"Reset due to low power event\n"
+"Please check your power supply"
+msgstr ""
+"Reinicialização devido a evento de baixa energia\n"
+"Verifique sua fonte de alimentação"
+
+#: ../src/power.c:171
+msgid ""
+"High display resolution is using large amounts of memory.\n"
+"Consider reducing screen resolution."
+msgstr ""
+"A alta resolução da tela está usando uma grande quantidade de memória.\n"
+"Considere reduzir a resolução da tela."
+
+#: ../src/power.c:236
+msgid ""
+"USB overcurrent\n"
+"Please check your connected USB devices"
+msgstr ""
+"Sobrecarga de corrente USB\n"
+"Verifique os dispositivos USB conectados"
+
+#: ../src/power.c:287
+msgid ""
+"Low voltage warning\n"
+"Please check your power supply"
+msgstr ""
+"Aviso de baixa tensão\n"
+"Verifique sua fonte de alimentação"
+
+#: ../src/power.c:306
+msgid "PSU low voltage detected\n"
+msgstr "Baixa tensão detectada na fonte de alimentação\n"
+
+#: ../src/power.c:307
+msgid "USB over current detected\n"
+msgstr "Detectada corrente excessiva no USB\n"
+
+#: ../src/power.c:308
+msgid "Low power reset has occurred\n"
+msgstr "Ocorreu uma reinicialização de baixa energia\n"
+
+#: ../src/power.c:363
+msgid "Power Information..."
+msgstr "Informações sobre energia..."
+
+#: ../src/power.c:456
+msgid "Monitors system power"
+msgstr "Monitora a energia do sistema"
+
+#: ../src/power.h:32
+msgid "System Monitor"
+msgstr "Monitor do sistema"
