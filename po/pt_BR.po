@@ -1,4 +1,4 @@
-Brazilian Portuguese translations for plugin package.
+# Brazilian Portuguese translations for plugin package.
 # Copyright (C) 2025 Raspberry Pi
 # This file is distributed under the same license as the pplug-power package.
 # Eduardo Addad de Oliveira <eduardo@addadtech.com.br>, 2025.
