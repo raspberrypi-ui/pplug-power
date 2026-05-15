@@ -1,3 +1,9 @@
+pplug-power (1.6) trixie; urgency=medium
+
+  * Add check for memory for active desktop
+
+ -- Simon Long <simon@raspberrypi.com>  Fri, 15 May 2026 11:07:49 +0100
+
 pplug-power (1.5) trixie; urgency=medium
 
   * Rebuild against latest APIs
