@@ -38,6 +38,8 @@ msgid ""
 "High display resolution is using large amounts of memory.\n"
 "Consider reducing screen resolution."
 msgstr ""
+"High display resolution is using large amounts of memory\n"
+"Consider reducing screen resolution"
 
 #: ../src/power.c:236
 msgid ""

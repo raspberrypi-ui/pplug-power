@@ -66,7 +66,8 @@ static void check_psu (PowerPlugin *pt);
 static void check_brownout (PowerPlugin *pt);
 static void check_user_warnings (PowerPlugin *pt);
 static char *get_string (char *cmd);
-static void check_memres (PowerPlugin *pt);
+static void check_memres (PowerPlugin *pt, int mem);
+static void check_membg (PowerPlugin *pt, int mem);
 static gboolean startup_checks (gpointer data);
 static gboolean cb_overcurrent_fd (gint, GIOCondition, gpointer data);
 static gboolean cb_lowvoltage_fd (gint, GIOCondition, gpointer data);
@@ -158,15 +159,11 @@ static char *get_string (char *cmd)
 #define MEM_WARN_THRESHOLD 2048
 #define RES_HEIGHT_THRESHOLD 1200
 
-static void check_memres (PowerPlugin *pt)
+static void check_memres (PowerPlugin *pt, int mem)
 {
     char *res;
-    int mem, width, height, max_h = 0;
+    int width, height, max_h = 0;
 
-    res = get_string ("vcgencmd get_config total_mem | cut -d = -f 2");
-    if (!res) return;
-    if (sscanf (res, "%d", &mem) != 1) return;
-    g_free (res);
     if (mem < 256 || mem > MEM_WARN_THRESHOLD) return;
 
     res = get_string ("wlr-randr | sed -n '/^HDMI-A-1/,/Position/{/current/p}' | sed 's/ //g' | sed 's/px.*//'");
@@ -189,15 +186,38 @@ static void check_memres (PowerPlugin *pt)
         wrap_notify (pt->panel, _("High display resolution is using large amounts of memory.\nConsider reducing screen resolution."));
 }
 
+#define MEM_BG_THRESHOLD 2048
+
+static void check_membg (PowerPlugin *pt, int mem)
+{
+    if (mem == 0) return;
+
+    if (mem < MEM_BG_THRESHOLD)
+    {
+        if (system ("pgrep swaybg > /dev/null") == 0) return;
+        wrap_notify (pt->panel, _("Drawing the desktop is using large amounts of memory\nConsider disabling active desktop"));
+    }
+}
+
 /* Monitoring callbacks */
 
 static gboolean startup_checks (gpointer data)
 {
     PowerPlugin *pt = (PowerPlugin *) data;
+    char *res;
+    int mem = 0;
+
+    res = get_string ("vcgencmd get_config total_mem | cut -d = -f 2");
+    if (res)
+    {
+        if (sscanf (res, "%d", &mem) != 1) mem = 0;
+        g_free (res);
+    }
 
     check_psu (pt);
     check_brownout (pt);
-    check_memres (pt);
+    check_memres (pt, mem);
+    check_membg (pt, mem);
     check_user_warnings (pt);
 
     pt->startup_id = 0;
