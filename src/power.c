@@ -217,7 +217,7 @@ static gboolean startup_checks (gpointer data)
     check_psu (pt);
     check_brownout (pt);
     check_memres (pt, mem);
-    check_membg (pt, mem);
+    //check_membg (pt, mem);
     check_user_warnings (pt);
 
     pt->startup_id = 0;
