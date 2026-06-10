@@ -1,3 +1,9 @@
+pplug-power (1.9) trixie; urgency=medium
+
+  * Add active desktop check
+
+ -- Simon Long <simon@raspberrypi.com>  Wed, 10 Jun 2026 14:55:44 +0100
+
 pplug-power (1.8) trixie; urgency=medium
 
   * Merge Polish translation
