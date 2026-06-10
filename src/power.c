@@ -67,7 +67,6 @@ static void check_brownout (PowerPlugin *pt);
 static void check_user_warnings (PowerPlugin *pt);
 static char *get_string (char *cmd);
 static void check_memres (PowerPlugin *pt, int mem);
-static void check_membg (PowerPlugin *pt, int mem);
 static gboolean startup_checks (gpointer data);
 static gboolean cb_overcurrent_fd (gint, GIOCondition, gpointer data);
 static gboolean cb_lowvoltage_fd (gint, GIOCondition, gpointer data);
@@ -186,19 +185,6 @@ static void check_memres (PowerPlugin *pt, int mem)
         wrap_notify (pt->panel, _("High display resolution is using large amounts of memory.\nConsider reducing screen resolution."));
 }
 
-#define MEM_BG_THRESHOLD 2048
-
-static void check_membg (PowerPlugin *pt, int mem)
-{
-    if (mem == 0) return;
-
-    if (mem < MEM_BG_THRESHOLD)
-    {
-        if (system ("pgrep swaybg > /dev/null") == 0) return;
-        wrap_notify (pt->panel, _("Drawing the desktop is using large amounts of memory\nConsider disabling active desktop"));
-    }
-}
-
 /* Monitoring callbacks */
 
 static gboolean startup_checks (gpointer data)
@@ -217,7 +203,6 @@ static gboolean startup_checks (gpointer data)
     check_psu (pt);
     check_brownout (pt);
     check_memres (pt, mem);
-    //check_membg (pt, mem);
     check_user_warnings (pt);
 
     pt->startup_id = 0;
