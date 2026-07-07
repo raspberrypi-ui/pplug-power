@@ -337,7 +337,7 @@ void power_init (PowerPlugin *pt)
     gtk_button_set_relief (GTK_BUTTON (pt->plugin), GTK_RELIEF_NONE);
 #ifndef LXPLUG
     g_signal_connect (pt->plugin, "clicked", G_CALLBACK (power_button_clicked), pt);
-    add_long_press (pt->plugin, NULL, NULL);
+    pt->gesture = add_long_press (pt->plugin, NULL, NULL);
 #endif
 
     /* Set up variables */
@@ -384,6 +384,10 @@ void power_init (PowerPlugin *pt)
 void power_destructor (gpointer user_data)
 {
     PowerPlugin *pt = (PowerPlugin *) user_data;
+
+#ifndef LXPLUG
+    if (pt->gesture) g_object_unref (pt->gesture);
+#endif
 
     if (pt->overcurrent_id > 0) g_source_remove (pt->overcurrent_id);
     pt->overcurrent_id = 0;
