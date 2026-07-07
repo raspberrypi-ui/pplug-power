@@ -337,6 +337,7 @@ void power_init (PowerPlugin *pt)
     gtk_button_set_relief (GTK_BUTTON (pt->plugin), GTK_RELIEF_NONE);
 #ifndef LXPLUG
     g_signal_connect (pt->plugin, "clicked", G_CALLBACK (power_button_clicked), pt);
+    add_long_press (pt->plugin, NULL, NULL);
 #endif
 
     /* Set up variables */

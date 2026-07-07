@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ============================================================================*/
 
 #include <glibmm.h>
-#include "gtk-utils.hpp"
 #include "power.hpp"
 
 extern "C" {
@@ -55,9 +54,6 @@ void WayfirePower::init (Gtk::HBox *container)
     pt = g_new0 (PowerPlugin, 1);
     pt->plugin = (GtkWidget *)((*plugin).gobj());
     icon_timer = Glib::signal_idle().connect (sigc::mem_fun (*this, &WayfirePower::set_icon));
-
-    /* Add long press for right click */
-    gesture = add_longpress_default (*plugin);
 
     /* Initialise the plugin */
     power_init (pt);
