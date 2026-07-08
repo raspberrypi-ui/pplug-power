@@ -20,7 +20,7 @@ Description: Power plugin for lxpanel-pi
 Package: wfplug-power
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- wf-panel-pi (>=1.10), pplug-power-data
+ wf-panel-pi (>=1.18), pplug-power-data
 Description: Power plugin for wf-panel-pi
  Plugin for wf-panel-pi to monitor power and system events.
 
