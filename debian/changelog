@@ -1,8 +1,14 @@
-pplug-power (1.9) trixie; urgency=medium
+pplug-power (1.10) trixie; urgency=medium
 
   * New XML
 
  -- Simon Long <simon@raspberrypi.com>  Wed, 08 Jul 2026 13:53:52 +0100
+
+pplug-power (1.9) trixie; urgency=medium
+
+  * Add active desktop check
+
+ -- Simon Long <simon@raspberrypi.com>  Wed, 10 Jun 2026 14:55:44 +0100
 
 pplug-power (1.8) trixie; urgency=medium
 
