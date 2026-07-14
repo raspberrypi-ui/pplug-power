@@ -36,7 +36,7 @@ extern "C" {
 #include "power.h"
 }
 
-class WayfirePower : public WayfireWidget
+class WidgetPower : public PanelWidget
 {
     std::unique_ptr <Gtk::Button> plugin;
 
@@ -48,7 +48,7 @@ class WayfirePower : public WayfireWidget
   public:
 
     void init (Gtk::HBox *container) override;
-    virtual ~WayfirePower ();
+    virtual ~WidgetPower ();
     bool set_icon (void);
 };
 

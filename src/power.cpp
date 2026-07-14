@@ -29,21 +29,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "power.hpp"
 
 extern "C" {
-    WayfireWidget *create () { return new WayfirePower; }
-    void destroy (WayfireWidget *w) { delete w; }
+    PanelWidget *create () { return new WidgetPower; }
+    void destroy (PanelWidget *w) { delete w; }
 
     const conf_table_t *config_params (void) { return conf_table; };
     const char *display_name (void) { return PLUGIN_TITLE; };
     const char *package_name (void) { return GETTEXT_PACKAGE; };
 }
 
-bool WayfirePower::set_icon (void)
+bool WidgetPower::set_icon (void)
 {
     power_update_display (pt);
     return false;
 }
 
-void WayfirePower::init (Gtk::HBox *container)
+void WidgetPower::init (Gtk::HBox *container)
 {
     /* Create the button */
     plugin = std::make_unique <Gtk::Button> ();
@@ -53,13 +53,13 @@ void WayfirePower::init (Gtk::HBox *container)
     /* Setup structure */
     pt = g_new0 (PowerPlugin, 1);
     pt->plugin = (GtkWidget *)((*plugin).gobj());
-    icon_timer = Glib::signal_idle().connect (sigc::mem_fun (*this, &WayfirePower::set_icon));
+    icon_timer = Glib::signal_idle().connect (sigc::mem_fun (*this, &WidgetPower::set_icon));
 
     /* Initialise the plugin */
     power_init (pt);
 }
 
-WayfirePower::~WayfirePower()
+WidgetPower::~WidgetPower()
 {
     icon_timer.disconnect ();
     power_destructor (pt);
