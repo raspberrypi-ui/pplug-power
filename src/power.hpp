@@ -38,12 +38,10 @@ extern "C" {
 
 class WidgetPower : public PanelWidget
 {
-    std::unique_ptr <Gtk::Button> plugin;
-
-    sigc::connection icon_timer;
-
-    /* plugin */
     PowerPlugin *pt;
+
+    std::unique_ptr <Gtk::Button> plugin;
+    sigc::connection icon_timer;
 
   public:
 
