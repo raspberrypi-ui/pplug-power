@@ -37,13 +37,12 @@ extern "C" {
     const char *package_name (void) { return GETTEXT_PACKAGE; };
 }
 
-bool WidgetPower::set_icon (void)
+void WidgetPower::widget_set_icon (void)
 {
     power_update_display (pt);
-    return false;
 }
 
-void WidgetPower::init (Gtk::HBox *container)
+void WidgetPower::widget_init (Gtk::HBox *container)
 {
     /* Create the button */
     plugin = std::make_unique <Gtk::Button> ();
@@ -53,7 +52,6 @@ void WidgetPower::init (Gtk::HBox *container)
     /* Setup structure */
     pt = g_new0 (PowerPlugin, 1);
     pt->plugin = (GtkWidget *)((*plugin).gobj());
-    icon_timer = Glib::signal_idle().connect (sigc::mem_fun (*this, &WidgetPower::set_icon));
 
     /* Initialise the plugin */
     power_init (pt);
@@ -61,7 +59,6 @@ void WidgetPower::init (Gtk::HBox *container)
 
 WidgetPower::~WidgetPower()
 {
-    icon_timer.disconnect ();
     power_destructor (pt);
 }
 
