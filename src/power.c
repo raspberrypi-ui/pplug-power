@@ -30,11 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <glib-unix.h>
 #include <libudev.h>
 
-#ifdef LXPLUG
 #include "plugin.h"
-#else
-#include "lxutils.h"
-#endif
 
 #include "power.h"
 
@@ -350,10 +346,8 @@ void power_init (PowerPlugin *pt)
 
     /* Set up button */
     gtk_button_set_relief (GTK_BUTTON (pt->plugin), GTK_RELIEF_NONE);
-#ifndef LXPLUG
     g_signal_connect (pt->plugin, "clicked", G_CALLBACK (power_button_clicked), pt);
-    pt->gesture = add_long_press (pt->plugin, NULL, NULL);
-#endif
+    wrap_add_longpress (pt->gesture, pt->plugin, NULL, NULL);
 
     /* Set up variables */
     pt->show_icon = 0;
@@ -400,9 +394,7 @@ void power_destructor (gpointer user_data)
 {
     PowerPlugin *pt = (PowerPlugin *) user_data;
 
-#ifndef LXPLUG
-    if (pt->gesture) g_object_unref (pt->gesture);
-#endif
+    wrap_free_gesture (pt->gesture);
 
     if (pt->overcurrent_id > 0) g_source_remove (pt->overcurrent_id);
     pt->overcurrent_id = 0;
@@ -419,61 +411,6 @@ void power_destructor (gpointer user_data)
     pt->udev = NULL;
     g_free (pt);
 }
-
-/*----------------------------------------------------------------------------*/
-/* LXPanel plugin functions                                                   */
-/*----------------------------------------------------------------------------*/
-#ifdef LXPLUG
-
-/* Constructor */
-static GtkWidget *power_constructor (LXPanel *panel, config_setting_t *settings)
-{
-    /* Allocate and initialize plugin context */
-    PowerPlugin *pt = g_new0 (PowerPlugin, 1);
-
-    /* Allocate top level widget and set into plugin widget pointer. */
-    pt->panel = panel;
-    pt->settings = settings;
-    pt->plugin = gtk_button_new ();
-    lxpanel_plugin_set_data (pt->plugin, pt, power_destructor);
-
-    power_init (pt);
-
-    return pt->plugin;
-}
-
-/* Handler for button press */
-static gboolean power_button_press_event (GtkWidget *widget, GdkEventButton *event, LXPanel *)
-{
-    PowerPlugin *pt = lxpanel_plugin_get_data (widget);
-    if (event->button == 1)
-    {
-        power_button_clicked (widget, pt);
-        return TRUE;
-    }
-    else return FALSE;
-}
-
-/* Handler for system config changed message from panel */
-static void power_configuration_changed (LXPanel *, GtkWidget *plugin)
-{
-    PowerPlugin *pt = lxpanel_plugin_get_data (plugin);
-    power_update_display (pt);
-}
-
-int module_lxpanel_gtk_version = 1;
-char module_name[] = PLUGIN_NAME;
-
-/* Plugin descriptor */
-LXPanelPluginInit fm_module_init_lxpanel_gtk = {
-    .name = PLUGIN_TITLE,
-    .description = N_("Monitors system power"),
-    .new_instance = power_constructor,
-    .reconfigure = power_configuration_changed,
-    .button_press_event = power_button_press_event,
-    .gettext_package = GETTEXT_PACKAGE
-};
-#endif
 
 /* End of file */
 /*----------------------------------------------------------------------------*/

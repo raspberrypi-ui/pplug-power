@@ -13,14 +13,14 @@ Homepage: http://raspberrypi.com/
 Package: lpplug-power
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- lxpanel-pi (>=1.8), pplug-power-data
+ pplug-power-data
 Description: Power plugin for lxpanel-pi
  Plugin for lxpanel-pi to monitor power and system events.
 
 Package: wfplug-power
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- wf-panel-pi (>=1.23), pplug-power-data
+ pplug-power-data
 Description: Power plugin for wf-panel-pi
  Plugin for wf-panel-pi to monitor power and system events.
 

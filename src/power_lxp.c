@@ -1,5 +1,5 @@
 /*============================================================================
-Copyright (c) 2024 Raspberry Pi
+Copyright (c) 2023-2025 Raspberry Pi
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,31 +25,65 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ============================================================================*/
 
-#ifndef WIDGETS_POWER_HPP
-#define WIDGETS_POWER_HPP
+#include <locale.h>
+#include <glib/gi18n.h>
 
-#include <widget.hpp>
-#include <gtkmm/button.h>
-
-extern "C" {
 #include "plugin.h"
+
 #include "power.h"
+
+/*----------------------------------------------------------------------------*/
+/* LXPanel plugin functions                                                   */
+/*----------------------------------------------------------------------------*/
+
+/* Constructor */
+static GtkWidget *power_constructor (LXPanel *panel, config_setting_t *settings)
+{
+    /* Allocate and initialize plugin context */
+    PowerPlugin *pt = g_new0 (PowerPlugin, 1);
+
+    /* Allocate top level widget and set into plugin widget pointer. */
+    pt->panel = panel;
+    pt->settings = settings;
+    pt->plugin = gtk_button_new ();
+    lxpanel_plugin_set_data (pt->plugin, pt, power_destructor);
+
+    power_init (pt);
+
+    return pt->plugin;
 }
 
-class WidgetPower : public PanelWidget
+/* Handler for button press */
+static gboolean power_button_press_event (GtkWidget *widget, GdkEventButton *event, LXPanel *)
 {
-    PowerPlugin *pt;
+    PowerPlugin *pt = lxpanel_plugin_get_data (widget);
+    if (event->button == 1)
+    {
+        power_button_clicked (widget, pt);
+        return TRUE;
+    }
+    else return FALSE;
+}
 
-    std::unique_ptr <Gtk::Button> plugin;
+/* Handler for system config changed message from panel */
+static void power_configuration_changed (LXPanel *, GtkWidget *plugin)
+{
+    PowerPlugin *pt = lxpanel_plugin_get_data (plugin);
+    power_update_display (pt);
+}
 
-  public:
+int module_lxpanel_gtk_version = 1;
+char module_name[] = PLUGIN_NAME;
 
-    void widget_init (Gtk::HBox *container) override;
-    virtual ~WidgetPower ();
-    void widget_set_icon (void);
+/* Plugin descriptor */
+LXPanelPluginInit fm_module_init_lxpanel_gtk = {
+    .name = PLUGIN_TITLE,
+    .description = N_("Monitors system power"),
+    .new_instance = power_constructor,
+    .reconfigure = power_configuration_changed,
+    .button_press_event = power_button_press_event,
+    .gettext_package = GETTEXT_PACKAGE
 };
-
-#endif /* end of include guard: WIDGETS_POWER_HPP */
 
 /* End of file */
 /*----------------------------------------------------------------------------*/
