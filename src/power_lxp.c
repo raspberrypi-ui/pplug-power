@@ -53,18 +53,6 @@ static GtkWidget *power_constructor (LXPanel *panel, config_setting_t *settings)
     return pt->plugin;
 }
 
-/* Handler for button press */
-static gboolean power_button_press_event (GtkWidget *widget, GdkEventButton *event, LXPanel *)
-{
-    PowerPlugin *pt = lxpanel_plugin_get_data (widget);
-    if (event->button == 1)
-    {
-        power_button_clicked (widget, pt);
-        return TRUE;
-    }
-    else return FALSE;
-}
-
 /* Handler for system config changed message from panel */
 static void power_configuration_changed (LXPanel *, GtkWidget *plugin)
 {
@@ -81,7 +69,6 @@ LXPanelPluginInit fm_module_init_lxpanel_gtk = {
     .description = N_("Monitors system power"),
     .new_instance = power_constructor,
     .reconfigure = power_configuration_changed,
-    .button_press_event = power_button_press_event,
     .gettext_package = GETTEXT_PACKAGE
 };
 
