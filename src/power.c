@@ -386,7 +386,7 @@ void power_init (PowerPlugin *pt)
             pt->lowvoltage_id = g_unix_fd_add (udev_monitor_get_fd (pt->udev_mon_lv), G_IO_IN, cb_lowvoltage_fd, pt);
         }
 
-        pt->startup_id = g_idle_add (startup_checks, pt);
+        if (!reload) pt->startup_id = g_idle_add (startup_checks, pt);
     }
 }
 
