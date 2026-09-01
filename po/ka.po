@@ -1,0 +1,113 @@
+# Georgian translation for lpplug_power.
+# Copyright (C) 2026 lpplug_power's authors.
+# This file is distributed under the same license as the lpplug_power package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: lpplug_power\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-10 15:54+0200\n"
+"PO-Revision-Date: 2026-08-29 18:37+0200\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: src/power.c:95
+msgid ""
+"This power supply is not capable of supplying 5A\n"
+"Power to peripherals will be restricted"
+msgstr ""
+"ამ კვების ბლოკს 5 ამპერის მოწოდება არ შეუძლია\n"
+"პერიფერიული მოწყობილობების კვება შეიზღუდება"
+
+#: src/power.c:111
+msgid ""
+"Reset due to low power event\n"
+"Please check your power supply"
+msgstr ""
+"გადატვირთვა დაბალი დენის ძაბვის გამო\n"
+"შეამოწმეთ თქვენი კვების ბლოკი"
+
+#: src/power.c:185
+msgid ""
+"High display resolution is using large amounts of memory.\n"
+"Consider reducing screen resolution."
+msgstr ""
+"ეკრანის მაღალ გარჩევადობას დიდი რაოდენობის მეხსიერება სჭირდება.\n"
+"იფიქრეთ ეკრანის გარჩევადობის შემცირებაზე."
+
+#: src/power.c:233
+msgid ""
+"USB overcurrent\n"
+"Please check your connected USB devices"
+msgstr ""
+"USB-ის ძაბვა დაშვებულზე მეტია\n"
+"შეამოწმეთ შეერთებული USB მოწყობილობები"
+
+#: src/power.c:267
+msgid ""
+"Low voltage warning\n"
+"Please check your power supply"
+msgstr ""
+"დაბალი ძაბვის გაფრთხილება\n"
+"შეამოწმეთ თქვენი კვების ბლოკი"
+
+#: src/power.c:294
+msgid "PSU low voltage detected\n"
+msgstr "აღმოჩენილია კვების ბლოკის დაბალი დენის ძაბვა\n"
+
+#: src/power.c:295
+msgid "USB over current detected\n"
+msgstr "აღმოჩენილია USB-ის დაშვებულზე მეტი დენის ძალა\n"
+
+#: src/power.c:296
+msgid "Low power reset has occurred\n"
+msgstr "აღმოჩენილია გადატვირთვა დაბალი ძაბვნის გამო\n"
+
+#: src/power.c:352
+msgid "Power Information..."
+msgstr "კვების ინფორმაცია..."
+
+#: src/power.c:450
+msgid "Monitors system power"
+msgstr "თვალყურს ადევნებს სისტემის კვებას"
+
+#. End of file
+#. ----------------------------------------------------------------------------
+#. ============================================================================
+#. Copyright (c) 2023-2025 Raspberry Pi
+#. All rights reserved.
+#.
+#. Redistribution and use in source and binary forms, with or without
+#. modification, are permitted provided that the following conditions are met:
+#. * Redistributions of source code must retain the above copyright
+#. notice, this list of conditions and the following disclaimer.
+#. * Redistributions in binary form must reproduce the above copyright
+#. notice, this list of conditions and the following disclaimer in the
+#. documentation and/or other materials provided with the distribution.
+#. * Neither the name of the copyright holder nor the
+#. names of its contributors may be used to endorse or promote products
+#. derived from this software without specific prior written permission.
+#.
+#. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+#. ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+#. WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+#. DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
+#. DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+#. (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+#. LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+#. ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#. (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+#. SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#. ============================================================================
+#. ----------------------------------------------------------------------------
+#. Typedefs and macros
+#. ----------------------------------------------------------------------------
+#: src/power.h:32
+msgid "System Monitor"
+msgstr "სისტემის მონიტორინგი"
