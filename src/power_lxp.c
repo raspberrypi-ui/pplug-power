@@ -66,8 +66,8 @@ char module_name[] = PLUGIN_NAME;
 /* Plugin descriptor */
 LXPanelPluginInit fm_module_init_lxpanel_gtk = {
     .name = PLUGIN_TITLE,
+    .description = PLUGIN_DESC,
     .gettext_package = GETTEXT_PACKAGE,
-    .description = N_("Monitors system power"),
     .new_instance = power_constructor,
     .reconfigure = power_configuration_changed
 };

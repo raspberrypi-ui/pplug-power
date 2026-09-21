@@ -30,6 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*----------------------------------------------------------------------------*/
 
 #define PLUGIN_TITLE N_("System Monitor")
+#define PLUGIN_DESC N_("Monitors system power")
 
 typedef struct
 {
