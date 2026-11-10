@@ -80,7 +80,7 @@ static void power_button_clicked (GtkWidget *, PowerPlugin *pt);
 static void check_psu (PowerPlugin *pt)
 {
     /* check for CM5 */
-    if (WEXITSTATUS (system ("rcn nonint get_pi_type > /dev/null")) == 35) return;
+    if (!system ("rcn nonint get_matching_pis 35 > /dev/null")) return;
 
     FILE *fp = fopen (POWER_PATH "max_current", "rb");
     int val;
