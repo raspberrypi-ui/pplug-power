@@ -79,7 +79,8 @@ static void power_button_clicked (GtkWidget *, PowerPlugin *pt);
 
 static void check_psu (PowerPlugin *pt)
 {
-    if (system ("raspi-config nonint is_cmfive") == 0) return;
+    /* check for CM5 */
+    if (WEXITSTATUS (system ("rcn nonint get_pi_type > /dev/null")) == 35) return;
 
     FILE *fp = fopen (POWER_PATH "max_current", "rb");
     int val;
