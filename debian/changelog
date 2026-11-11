@@ -1,3 +1,9 @@
+pplug-power (1.17) trixie; urgency=medium
+
+  * Modify for rcn
+
+ -- Simon Long <simon@raspberrypi.com>  Wed, 11 Nov 2026 14:24:27 +0000
+
 pplug-power (1.16) trixie; urgency=medium
 
   * Add tooltip for widget browser
